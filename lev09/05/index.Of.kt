@@ -14,3 +14,9 @@ fun getIndexOfFirstWord(string: String, word: String): Int {
 fun getIndexOfLastWord(string: String, word: String): Int {
     return string.lastIndexOf(word)
 }
+
+/*
+Output :
+The index of the first character of the first instance of the word "code" is 42
+The index of the first character of the last instance of the word "code" is 57
+*/
