@@ -1,3 +1,59 @@
+class LRUCache(val capacity: Int) {
+
+    private var firstNode = LinkedNode(-1, -1)
+    private var lastNode = firstNode
+    private val nodeMap = mutableMapOf<Int, LinkedNode>()
+
+    fun get(key: Int): Int {
+        val node = nodeMap[key] ?: return -1
+        delete(node)
+        append(node)
+        return node.value
+    }
+
+    fun put(key: Int, value: Int) {
+        if (key in nodeMap) {
+            delete(nodeMap[key]!!)
+        } else if (nodeMap.size == capacity) {
+            delete(firstNode.right!!)
+        }
+
+        append(LinkedNode(key, value))
+    }
+
+    private fun delete(node: LinkedNode) {
+        node.left!!.right = node.right
+        node.right?.let { it.left = node.left }
+        nodeMap -= node.key
+
+        if (node == lastNode) {
+            lastNode = node.left!!
+        }
+        node.left = null
+        node.right = null
+    }
+
+    private fun append(node: LinkedNode) {
+        lastNode.right = node
+        node.left = lastNode
+        lastNode = node
+        nodeMap[node.key] = node
+    }
+
+    private data class LinkedNode(
+        val key: Int,
+        val value: Int,
+        var left: LinkedNode? = null,
+        var right: LinkedNode? = null,
+    )
+}
+
+/////////////////////////////////////////////////////
+//////////////////////////////////////////////////
+
+////////////////////////////////////////////////
+
+
 class LRUCache(private val capacity: Int) {
 
     // Класс узла для двусвязного списка
@@ -51,6 +107,8 @@ class LRUCache(private val capacity: Int) {
         tail.prev = node
     }
 }
+
+
 
 
 fun main() {
