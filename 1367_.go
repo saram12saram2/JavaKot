@@ -66,3 +66,24 @@ func main() {
     fmt.Println(result) // Output: true
 }
 */
+
+
+func recursive(head *ListNode, root *TreeNode) bool {
+    if head == nil {
+        return true
+    }
+    if root == nil {
+        return false
+    }
+    if head.Val != root.Val {
+        return false
+    }
+    return recursive(head.Next, root.Left) || recursive(head.Next, root.Right)
+}
+
+func isSubPath(head *ListNode, root *TreeNode) bool {
+    if root == nil && head != nil {
+        return false
+    }
+    return recursive(head, root) || isSubPath(head, root.Left) || isSubPath(head, root.Right)
+}
